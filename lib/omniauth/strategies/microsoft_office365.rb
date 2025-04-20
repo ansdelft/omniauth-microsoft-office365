@@ -5,7 +5,7 @@ module OmniAuth
     class MicrosoftOffice365 < OmniAuth::Strategies::OAuth2
       option :name, :microsoft_office365
 
-      DEFAULT_SCOPE="openid User.Read Contacts.Read"
+      DEFAULT_SCOPE="openid User.Read"
 
       option :client_options, {
         site:          "https://login.microsoftonline.com",
