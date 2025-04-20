@@ -27,7 +27,6 @@ module OmniAuth
           business_phones: raw_info["businessPhones"],
           mobile_phone:    raw_info["mobilePhone"],
           office_phone:    raw_info["officePhone"],
-          image:           avatar_file,
         }
       end
 
@@ -58,29 +57,6 @@ module OmniAuth
       def callback_url
         options[:redirect_uri] || (full_host + script_name + callback_path)
       end
-
-      def avatar_file
-        photo = access_token.get("https://graph.microsoft.com/v1.0/me/photo/$value")
-        ext   = photo.content_type.sub("image/", "") # "image/jpeg" => "jpeg"
-
-        Tempfile.new(["avatar", ".#{ext}"]).tap do |file|
-          file.binmode
-          file.write(photo.body)
-          file.rewind
-        end
-
-      rescue ::OAuth2::Error => e
-        if e.response.status == 404 # User has no avatar...
-          return nil
-        elsif e.response.status == 403 # Permissions are not allowed or the profile photo is from a local AD
-          nil
-        elsif e.code['code'] == 'GetUserPhoto' && e.code['message'].match('not supported')
-          nil
-        else
-          raise
-        end
-      end
-
     end
   end
 end
