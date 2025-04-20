@@ -19,14 +19,14 @@ module OmniAuth
 
       info do
         {
-          email:           raw_info["mail"] || raw_info["userPrincipalName"],
+          email:           raw_info["userPrincipalName"],
           display_name:    raw_info["displayName"],
           first_name:      raw_info["givenName"],
           last_name:       raw_info["surname"],
           job_title:       raw_info["jobTitle"],
           business_phones: raw_info["businessPhones"],
           mobile_phone:    raw_info["mobilePhone"],
-          office_phone:    raw_info["officePhone"],
+          office_phone:    raw_info["officePhone"]
         }
       end
 
